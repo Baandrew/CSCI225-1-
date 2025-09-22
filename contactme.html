@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Contact Me</title>
+</head>
+
+<body>
+    <h1>Whatch this TBOI video</h1>
+    <iframe width="1218" height="685" src="https://www.youtube.com/embed/LGGOuWf59EE" title="I Finally Achieved INFINITE LUCK" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+    <form name="feedback">
+        <label for="fname">First name</label>
+        <input type="text" id="fname" name="fname" placeholder="anonymous" required>
+        <br>
+        <label for="lname">Last name</label>
+        <input type="text " id="lname" name="lname" placeholder="anonymous" required>
+        <br>
+        <label for="mail"> Email:</label>
+        <input type="email" id="mail" name="mail" placeholder="Name@domain.com"><br>
+        <p>Will you recommend this website?</p>
+        <input type="radio" id="yes" name="recommend" value="yes" required>
+        <label for="yes">YES</label>
+        <input type="radio" id="no" name="recommend" value="no" required>
+        <label for="no">NO</label><br>
+
+        <label for="birthday">Birthdate</label>
+        <input type="date" id="birthday" name="birthday"><br>
+        
+        <label for="upload">Upload file:</label>
+        <input type="file" id="upload" name="upload"><br>
+
+        <label for="color">Favorite color:</label>
+        <input type="color" id="color" name="Favoritecolor"><br>
+
+        <label for="rating">What's your favorite website?:</label>
+        <select type="rating" id="rating" required>
+
+        <option value="" disabled selected> select a website</option>
+        <option value="1">Youtube</option>
+        <option value="2">Instagram</option>
+        <option value="3">X</option>
+        <option value="4">Snapchat</option>
+        <option value="5">Tumblr</option>
+        <option value="6">Reddit</option>
+        <option value="7">Coolmathgames</option>
+        <option value="8">Newgrounds</option>
+        <option value="9">TikTok</option>
+        <option value="10">Google</option>
+        </select><br>
+
+        <label for="points">Rate this website from 0-10</label>
+        <input type="range" id="points" name="points" min="0" max="10" step="1" value="5" oninput="sliderValue.innerText = this.value">
+        <span id="sliderValue">5</span><br>
+
+        <label for="suggestions">Any comments?</label><br>
+        <textarea name="suggestions" id="suggestions" rows="5" cols="50" placeholder="Comments...."></textarea>
+        <input type="submit" value="submit">
+
+    </form>
+    
+            
+    
+</body>
+
+</html>
