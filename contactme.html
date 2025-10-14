@@ -2,127 +2,96 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <title>Contact Me</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">"
-        <style>
-            .container-xxl{
-                background-color: aqua;
-                padding: 1%;
-            }
-            .navbar{
-                background-color: aquamarine;
-                color: black;
-            }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Me</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <style>
+    body {
+      background-color: #e9f6f8;
+    }
 
-            iframe{
-                margin-left: 20px;
-                border-top: 10px solid hsla(204, 65%, 60%, 0);
-                border-right: 15px solid hsla(204, 50%, 60%, 0);
-                border-bottom: 20px solid hsla(204, 55%, 60%, 0);
-                border-left: 25px solid hsla(204, 70%, 60%, 0);
-
-            }
-        </style>
+    iframe {
+      border: 5px solid #0dcaf0;
+      border-radius: 10px;
+    }
+  </style>
 </head>
 
 <body>
-    <div class="container-xxl">
-        <div class="row">'
-            <div class="col>">
-                <div class="navbar navbar-expand-lg">
-                    <ul class="navbar-nav">
-                        <li class="nav-item"><a class="nav-link" href="https://www.usca.edu/">USCA HOME PAGE</a></lo>
-                        <li class="nav-item"><a class="nav-link" href="#assignment">Assignment section</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#contact">Contact informtion</a></li>
-                        <li class="nav-item"><a class="nav-link" href="https://www.coolmathgames.com/">cool math
-                                games</a></li>
-                        <li class="nav-item"><a class="nav-link" href="https://www.fbi.gov/wanted/fugitives">FBI most
-                                wanted</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="row">
 
-
-            <div class="col">
-                <h1>Watch this TBOI video</h1>
-                <iframe width="900" height="400" src="https://www.youtube.com/embed/LGGOuWf59EE"
-                    title="I Finally Achieved INFINITE LUCK" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-            </div>
-                    <div class="col-2 ">
-                <form name="feedback">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" id="fname" name="fname" placeholder="anonymous"
-                            required>
-                        <label for="fname">First name</label>
-                    </div>
-                    <br>
-                    <div class="form-floating">
-                        <input type="text" class="form-control" id="lname" name="lname" placeholder="anonymous"
-                            required>
-                        <label for="lname">Last name</label>
-                    </div>
-                    <br>
-                    <div class="form-floating">
-                        <input type="email" class="form-control" id="mail" name="mail" placeholder="Name@domain.com">
-                        <label for="mail"> Email:</label>
-                    </div>
-                    <br>
-                    <div>
-                    <label>Will you recommend this website?</label>
-                        <div class="form-check form-check-inline">
-                    <input type="radio" id="yes" name="recommend" value="yes" required>
-                    <label for="yes">YES</label>
-                    <input type="radio" id="no" name="recommend" value="no" required>
-                    <label for="no">NO</label><br>
-                    </div>
-                    <label for="birthday">Birthdate</label>
-                    <input type="date" id="birthday" name="birthday"><br>
-
-                    <label for="upload">Upload file:</label>
-                    <input type="file" id="upload" name="upload"><br>
-
-                    <label for="color">Favorite color:</label>
-                    <input type="color" id="color" name="Favoritecolor"><br>
-
-                    <label for="rating">What's your favorite website?:</label>
-                    <select type="rating" id="rating" required>
-
-                        <option value="" disabled selected> select a website</option>
-                        <option value="1">Youtube</option>
-                        <option value="2">Instagram</option>
-                        <option value="3">X</option>
-                        <option value="4">Snapchat</option>
-                        <option value="5">Tumblr</option>
-                        <option value="6">Reddit</option>
-                        <option value="7">Coolmathgames</option>
-                        <option value="8">Newgrounds</option>
-                        <option value="9">TikTok</option>
-                        <option value="10">Google</option>
-                    </select><br>
-
-                    <label for="points">Rate this website from 0-10</label>
-                    <input type="range" id="points" name="points" min="0" max="10" step="1" value="5"
-                        oninput="sliderValue.innerText = this.value">
-                    <span id="sliderValue">5</span><br>
-
-                    <label for="suggestions">Any comments?</label><br>
-                    <textarea name="suggestions" id="suggestions" rows="5" cols="25"
-                        placeholder="Comments...."></textarea>
-                    <input type="submit" value="submit">
-
-                </form>
-            </div>
-        </div>
+  <nav class="navbar navbar-expand-lg bg-info fixed-top">
+    <div class="container-fluid">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0 fw-semibold">
+        <li class="nav-item"><a class="nav-link text-dark" href="https://www.usca.edu/">USCA HOME PAGE</a></li>
+        <li class="nav-item"><a class="nav-link text-dark" href="#assignment">Assignment Section</a></li>
+        <li class="nav-item"><a class="nav-link text-dark" href="#contact">Contact Information</a></li>
+        <li class="nav-item"><a class="nav-link text-dark" href="https://www.coolmathgames.com/">Cool Math Games</a></li>
+        <li class="nav-item"><a class="nav-link text-dark" href="https://www.fbi.gov/wanted/fugitives">FBI Most Wanted</a></li>
+      </ul>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
-</body>
+  </nav>
 
-</html>
+  <div class="container mt-5 pt-5">
+    <div class="row g-4">
+      
+      <div class="col-lg-8">
+        <h1 class="mb-3">Watch this TBOI video</h1>
+        <iframe class="w-100" height="400"
+          src="https://www.youtube.com/embed/LGGOuWf59EE"
+          title="I Finally Achieved INFINITE LUCK"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen></iframe>
+      </div>
+
+      <div class="col-lg-4" id="contact">
+        <h2 class="mb-3">Contact Me</h2>
+        <form name="feedback">
+
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="fname" name="fname" placeholder="First name" required>
+            <label for="fname">First name</label>
+          </div>
+
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="lname" name="lname" placeholder="Last name" required>
+            <label for="lname">Last name</label>
+          </div>
+
+          <div class="form-floating mb-2">
+            <input type="email" class="form-control" id="mail" name="mail" placeholder="name@domain.com">
+            <label for="mail">Email</label>
+          </div>
+          <small class="form-text text-muted mb-3 d-block">Your email will not be shared.</small>
+
+          <div class="mb-3">
+            <label class="form-label d-block">Will you recommend this website?</label>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="yes" name="recommend" value="yes" required>
+              <label class="form-check-label" for="yes">Yes</label>
+            </div>
+            <div class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" id="no" name="recommend" value="no" required>
+              <label class="form-check-label" for="no">No</label>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="birthday" class="form-label">Birthdate</label>
+            <input type="date" class="form-control" id="birthday" name="birthday">
+          </div>
+
+          <div class="mb-3">
+            <label for="upload" class="form-label">Upload a file</label>
+            <input type="file" class="form-control" id="upload" name="upload">
+          </div>
+
+          <div class="mb-3">
+            <label for="color" class="form-label">Favorite color</label>
+            <input type="color" class="form-control form-control-color" id="color" name="Favoritecolor" value="#563d7c" title="Choose your favorite color">
+          </div>
+
+          <div class="mb-3">
+            <label for="rating" class="form-label">What's your favorite website?</label>
+            <select class="form-select" id="rating" require
