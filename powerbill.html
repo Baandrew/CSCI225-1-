@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Georgia Power Bill Calculator</title>
+  <style>
+    body{font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#f4f6f8; color:#0b1220; padding:28px}
+    .card{max-width:820px;margin:18px auto;padding:20px;background:white;border-radius:10px;box-shadow:0 6px 18px rgba(12,18,32,0.08)}
+    h1{font-size:20px;margin:0 0 12px}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    label{display:block;font-size:13px;margin-bottom:6px}
+    input[type="number"], select{width:100%;padding:8px;border-radius:6px;border:1px solid #d6dbe3}
+    .actions{display:flex;gap:8px;margin-top:10px}
+    button{padding:10px 14px;border-radius:8px;border:0;background:#2563eb;color:white;cursor:pointer}
+    button.secondary{background:#6b7280}
+    .results{margin-top:18px;background:#fbfdff;padding:12px;border-radius:8px;border:1px solid #e6eefb}
+    .row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dashed rgba(11,18,32,0.04)}
+    .row:last-child{border-bottom:0}
+    .muted{font-size:13px;color:#475569}
+    .note{font-size:13px;color:#0b1220;margin-top:10px}
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Georgia Power Bill Calculator</h1>
+    <p class="muted">Enter your usage and billing details. All amounts shown in US dollars. Values are rounded to two decimals.</p>
+
+    <div class="grid" style="margin-top:12px">
+      <div>
+        <label>Monthly Usage (kWh)</label>
+        <input id="usage" type="number" step="any" min="0" value="1000">
+      </div>
+
+      <div>
+        <label>Days in Billing Period</label>
+        <input id="days" type="number" step="any" min="1" value="30">
+      </div>
+
+      <div>
+        <label>Inside City Limits?</label>
+        <select id="insideCity">
+          <option value="true">Inside City Limits</option>
+          <option value="false">Outside City Limits</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Season</label>
+        <select id="season">
+          <option value="summer">Summer</option>
+          <option value="winter">Winter</option>
+        </select>
+      </div>
+
+      <div>
+        <label>Tax Rate (%)</label>
+        <input id="tax" type="number" step="any" min="0" value="7">
+      </div>
+
+      <div>
+        <label>Open Georgia Power link if total &gt; $500?</label>
+        <select id="autolink">
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button onclick="calculate()">Calculate</button>
+      <button class="secondary" onclick="clearResults()">Clear</button>
+    </div>
+
+    <div id="results" class="results" style="display:none">
+      <div class="row"><div>Base Charge (daily × days)</div><div id="outBaseCharge"></div></div>
+      <div class="row"><div>Tier 1 Charge</div><div id="outTier1"></div></div>
+      <div class="row"><div>Tier 2 Charge</div><div id="outTier2"></div></div>
+      <div class="row"><div>Tier 3 Charge</div><div id="outTier3"></div></div>
+      <div class="row"><div><strong>Base Revenue (subtotal)</strong></div><div id="outBaseRevenue"></div></div>
+      <div class="row"><div>Fuel Cost Rider</div><div id="outFuelCost"></div></div>
+      <div class="row"><div>Demand Side Management (1.5989% of base revenue)</div><div id="outDSM"></div></div>
+      <div class="row"><div>Nuclear Cost Recovery (4.1562% of base revenue)</div><div id="outNuclear"></div></div>
+      <div class="row"><div>Environmental Compliance (16.2813% of base revenue)</div><div id="outEnv"></div></div>
+      <div class="row"><div><strong>Total Revenue</strong></div><div id="outTotalRevenue"></div></div>
+      <div class="row"><div>Franchise Fee</div><div id="outFranchise"></div></div>
+      <div class="row"><div><strong>Total before tax</strong></div><div id="outBeforeTax"></div></div>
+      <div class="row"><div>Tax Amount</div><div id="outTax"></div></div>
+      <div class="row"><div style="font-weight:700">Total Bill (after tax)</div><div id="outTotalAfterTax" style="font-weight:700"></div></div>
+
+      <p class="note">If your total bill > $500 the Georgia Power products &amp; programs page will open in a new tab (if enabled).</p>
+    </div>
+  </div>
+
+<script>
+function toDollars(x){ return Number(x).toFixed(2); }
+
+function calculate(){
+  
+  const usage = parseFloat(document.getElementById('usage').value) || 0;
+  const days = parseFloat(document.getElementById('days').value) || 0;
+  const insideCity = document.getElementById('insideCity').value === 'true';
+  const season = document.getElementById('season').value;
+  const taxRate = parseFloat(document.getElementById('tax').value) || 0;
+  const autolink = document.getElementById('autolink').value === 'yes';
+
+  if(days <= 0){ alert('Days must be > 0'); return; }
+  if(usage < 0){ alert('Usage must be >= 0'); return; }
+
+  const basePerDay = 0.4603;
+  const baseCharge = basePerDay * days;
+
+  
+  const tier1Limit = 650;
+  const tier2Limit = 1000;
+
+  let tier1Usage = Math.min(usage, tier1Limit);
+  let tier2Usage = Math.min(Math.max(usage - tier1Limit, 0), tier2Limit - tier1Limit);
+  let tier3Usage = Math.max(usage - tier2Limit, 0);
+
+  
+  let tier1Rate, tier2Rate, tier3Rate;
+  if(season === 'summer'){
+    tier1Rate = 0.066678;
+    tier2Rate = 0.110748;
+    tier3Rate = 0.114625;
+  } else {
+    
+    tier1Rate = 0.062404;
+    tier2Rate = 0.062404;
+    tier3Rate = 0.062404;
+  }
+
+  const tier1Charge = tier1Usage * tier1Rate;
+  const tier2Charge = tier2Usage * tier2Rate;
+  const tier3Charge = tier3Usage * tier3Rate;
+
+  
+  const baseRevenue = baseCharge + tier1Charge + tier2Charge + tier3Charge;
+
+ 
+  const fuelRate = (season === 'summer') ? 0.045876 : 0.042859;
+  const fuelCost = usage * fuelRate;
+
+  
+  const dsm = baseRevenue * 0.015989;        
+  const nuclear = baseRevenue * 0.041562;    
+  const env = baseRevenue * 0.162813;        
+
+  
+  const totalRevenue = baseRevenue + fuelCost + dsm + nuclear + env;
+
+  const franchisePct = insideCity ? 0.030674 : 0.011839; 
+  const franchiseFee = totalRevenue * franchisePct;
+
+  const beforeTax = totalRevenue + franchiseFee;
+
+  const taxAmount = beforeTax * (taxRate / 100.0);
+  const totalAfterTax = beforeTax + taxAmount;
+
+  document.getElementById('outBaseCharge').innerText = '$' + toDollars(baseCharge);
+  document.getElementById('outTier1').innerText = '$' + toDollars(tier1Charge) + ` (usage ${toDollars(tier1Usage)} kWh @ $${tier1Rate}/kWh)`;
+  document.getElementById('outTier2').innerText = '$' + toDollars(tier2Charge) + ` (usage ${toDollars(tier2Usage)} kWh @ $${tier2Rate}/kWh)`;
+  document.getElementById('outTier3').innerText = '$' + toDollars(tier3Charge) + ` (usage ${toDollars(tier3Usage)} kWh @ $${tier3Rate}/kWh)`;
+  document.getElementById('outBaseRevenue').innerText = '$' + toDollars(baseRevenue);
+  document.getElementById('outFuelCost').innerText = '$' + toDollars(fuelCost) + ` (fuel rate $${fuelRate}/kWh)`;
+  document.getElementById('outDSM').innerText = '$' + toDollars(dsm);
+  document.getElementById('outNuclear').innerText = '$' + toDollars(nuclear);
+  document.getElementById('outEnv').innerText = '$' + toDollars(env);
+  document.getElementById('outTotalRevenue').innerText = '$' + toDollars(totalRevenue);
+  document.getElementById('outFranchise').innerText = '$' + toDollars(franchiseFee) + ` (${(franchisePct*100).toFixed(4)}% of total revenue)`;
+  document.getElementById('outBeforeTax').innerText = '$' + toDollars(beforeTax);
+  document.getElementById('outTax').innerText = '$' + toDollars(taxAmount) + ` (${taxRate}% tax)`;
+  document.getElementById('outTotalAfterTax').innerText = '$' + toDollars(totalAfterTax);
+
+  document.getElementById('results').style.display = 'block';
+
+  if(totalAfterTax > 500 && autolink){
+    window.open('https://www.georgiapower.com/residential/save-money-and-energy/products-programs.html', '_blank');
+  }
+}
+
+function clearResults(){
+  document.getElementById('results').style.display = 'none';
+}
+</script>
+</body>
+</html>
